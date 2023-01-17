@@ -27,7 +27,10 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', (req, res) => res.send('Hello World SGWebFreelancer'));
+app.get('/', (req, res) => {
+    res.send('Hello World')
+});
+
 
 app.use(function(req, res, next) {
     const err = new Error('Not Found');
