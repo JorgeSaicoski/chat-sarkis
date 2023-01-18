@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const config = require('./config');
+const config = require('./config.env');
 const cors = require("cors");
 const helmet = require("helmet");
+require("dotenv").config({ path: "./config.env" });
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 
 const allowlist = ['http://sarkis.dev','http://chat.sarkis.dev'];
