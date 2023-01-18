@@ -1,25 +1,24 @@
 const mongoose = require("mongoose")
 
-console.log(process.env.DB_URI)
+console.log("------------------------------------------------------------------------")
 
 async function connectToDB(){
     try {
-        await mongoose.connect(process.env.DB_URI,
-            {
-                useNewUrlParser: true,
-                useFindAndModify: false,
-                useUnifiedTopology: true
-            }
-        );
-        console.log("-----------------------")
-        console.log("MONGO CONNECTED")
-        console.log(`${process.env.DB_URI}`)
-        console.log("-----------------------")
-
+        mongoose.connect(process.env.DB_URI).then((db)=>{
+            console.log("-----------------------")
+            console.log("MONGO CONNECTED")
+            console.log(db.connection.host)
+            console.log(`${process.env.DB_URI}`)
+            console.log("-----------------------")
+        });
     } catch (error) {
-        handleError(error);
+        console.log(error);
     }
 }
 
-connectToDB()
+connectToDB().then((data)=>{
+    console.log(data)
+}).catch((err)=>{
+    console.log(err)
+})
 

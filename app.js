@@ -9,7 +9,10 @@ const port = process.env.PORT || 5000;
 const db = require("./db/conn");
 
 
-const allowlist = ['http://sarkis.dev','http://chat.sarkis.dev'];
+const allowlist = [
+    'http://sarkis.dev',
+    'http://chat.sarkis.dev'
+];
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
     let isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
@@ -30,7 +33,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    res.send("<p>Hi</p>")
+    res.send(`${process.env.DB_URI}`)
 });
 
 

@@ -1,17 +1,30 @@
-version: '3'
+version: '3.8'
 services:
   node:
+    container_name: node-chat
     restart: always
     build: .
     ports:
-      - 80:3000
+      - "5000:3000"
+    links:
+      - mongo
     volumes:
       - ./:/code
+    networks:
+      - chat-app
   mongo:
+    container_name: chatdata
     image: mongo
+    restart: unless-stopped
+    env_file: config.env
+    networks:
+      - chat-app
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongodb:/data/db
 volumes:
   mongodb:
+networks:
+  chat-app:
+    driver: bridge
