@@ -15,6 +15,8 @@ async function connectToDB(){
         console.log(error);
     }
 }
+console.log("------------------------------------------------------------------------")
+
 
 connectToDB().then((data)=>{
     console.log(data)

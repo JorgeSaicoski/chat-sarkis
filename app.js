@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const config = require('./config.env');
 const cors = require("cors");
 const helmet = require("helmet");
 require("dotenv").config({ path: "./config.env" });
 const app = express();
 const port = process.env.PORT || 5000;
 const db = require("./db/conn");
+
+const messagesRoutes = require("./routes/messages")
 
 
 const allowlist = [
@@ -24,6 +25,7 @@ const corsOptionsDelegate = (req, callback) => {
     callback(null, corsOptions)
 }
 
+app.use('/messages', messagesRoutes);
 
 app.use(cors(corsOptionsDelegate));
 

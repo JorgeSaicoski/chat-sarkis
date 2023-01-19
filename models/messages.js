@@ -9,6 +9,14 @@ const MessageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    readed: {
+        type: Boolean,
+        required: true
+    },
+    createdAt:{
+        type: Date,
+        default: new Date()
+    }
 });
 
 const Message = mongoose.model("Message", MessageSchema);
