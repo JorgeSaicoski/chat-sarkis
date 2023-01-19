@@ -1,5 +1,4 @@
 import {Chat} from "../models/chats";
-import {Message} from "../models/messages";
 
 export const getAllChat = async (req, res) => {
     try {
@@ -26,7 +25,7 @@ export const getChatByUser = async (req, res) =>{
     try{
         const  chats = Chat.find(
             {
-                participants: [req.body.user]
+                participants: [req.params.id]
             }
         ).populate('participants')
         res.status(200).json(chats)

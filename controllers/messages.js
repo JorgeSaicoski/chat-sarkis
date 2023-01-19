@@ -27,11 +27,19 @@ export const getMessageByChat = async (req, res) =>{
     try{
         const  chats = Message.find(
             {
-                chat: req.body.chat
+                chat:req.params.id
             }
         ).populate('participants')
         res.status(200).json(chats)
     } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+export const deleteMessagesByChat = async (req, res) =>{
+    try{
+        await Chat.deleteMany({chat:req.params.id})
+    }catch (error) {
         res.status(404).json({message:error.message})
     }
 }
