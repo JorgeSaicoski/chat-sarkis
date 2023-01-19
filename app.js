@@ -8,6 +8,8 @@ const port = process.env.PORT || 5000;
 const db = require("./db/conn");
 
 const messagesRoutes = require("./routes/messages")
+const chatsRoutes = require("./routes/chats")
+const loginRoutes = require("./routes/login")
 
 
 const allowlist = [
@@ -36,6 +38,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/messages', messagesRoutes);
+app.use('/chat', chatsRoutes);
+app.use('/login', loginRoutes);
 
 app.get('/', (req, res) => {
     res.send(`${process.env.DB_URI}`)
