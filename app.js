@@ -25,8 +25,6 @@ const corsOptionsDelegate = (req, callback) => {
     callback(null, corsOptions)
 }
 
-app.use('/messages', messagesRoutes);
-
 app.use(cors(corsOptionsDelegate));
 
 app.use(helmet());
@@ -34,6 +32,11 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+app.use('/messages', messagesRoutes);
+
 app.get('/', (req, res) => {
     res.send(`${process.env.DB_URI}`)
 });
