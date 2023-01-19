@@ -2,14 +2,22 @@ const mongoose = require("mongoose")
 
 const MessageSchema = new mongoose.Schema({
     chat: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat'
     },
     message: {
         type: String,
         required: true,
     },
-    readed: {
+    sender:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    receive:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    read: {
         type: Boolean,
         required: true
     },
