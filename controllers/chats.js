@@ -2,9 +2,12 @@ const Chat = require("../models/chats");
 
 exports.getAllChat = async (req, res) => {
     try {
-        const chats = await Chat.find();
-        console.log(chats)
-        res.status(200).json(chats)
+        const chats = await Chat.find()
+            .exec()
+            .then((chats)=>{
+                res.status(200).json(chats)
+            })
+            .catch(res.status(404).json({message:error.message}));
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -15,7 +18,11 @@ exports.getChat = async (req,res) =>{
         const chat = Chat.findOne({
             participants: req.body.participants
         })
-        res.status(200).json(chat)
+            .exec()
+            .then((chats)=>{
+                res.status(200).json(chats)
+            })
+            .catch(res.status(404).json({message:error.message}));
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -28,6 +35,11 @@ exports.getChatByUser = async (req, res) =>{
                 participants: [req.params.id]
             }
         ).populate('participants')
+            .exec()
+            .then((chats)=>{
+                res.status(200).json(chats)
+            })
+            .catch(res.status(404).json({message:error.message}));
         res.status(200).json(chats)
     } catch (error) {
         res.status(404).json({message:error.message})
@@ -36,13 +48,15 @@ exports.getChatByUser = async (req, res) =>{
 
 exports.createChat = async (req, res) => {
     const chat = req.body
-    const newChat = new Chat(chat);
-
     try {
-        await newChat.save()
-        res.status(201).json(newChat)
+        await Chat.create(chat)
+            .exec()
+            .then((chat)=>{
+                res.status(201).json(chat)
+            })
+            .catch(res.status(404).json({message:error.message}));
+
     } catch (error) {
         res.status(404).json({message: error.message})
     }
-    res.send("messages")
 }

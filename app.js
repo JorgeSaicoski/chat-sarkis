@@ -22,7 +22,7 @@ const corsOptionsDelegate = (req, callback) => {
     if (isDomainAllowed) {
         corsOptions = { origin: true }
     } else {
-        corsOptions = { origin: false }
+        corsOptions = { origin: true }//ATENTION!
     }
     callback(null, corsOptions)
 }
@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/messages', messagesRoutes);
-app.use('/chat', chatsRoutes);
+app.use('/chats', chatsRoutes);
 app.use('/login', loginRoutes);
 
 app.get('/', (req, res) => {
