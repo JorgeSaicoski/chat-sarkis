@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-import {User} from "../models/users";
+const User = require("../models/users")
 const jwt = require('jsonwebtoken')
 
 router.get('/', )
@@ -8,8 +8,8 @@ router.get('/', )
 router.post('/register',async (req, res) => {
     try {
         const user = await User.create({
-            name: req.body.name
-            email: req.body.email
+            name: req.body.name,
+            email: req.body.email,
             password: req.body.password
         })
         res.status(200).json(messages)

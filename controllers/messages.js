@@ -1,6 +1,7 @@
-import {Message} from "../models/messages";
-import {Chat} from "../models/chats";
-export const getAllMessages = async (req, res) => {
+const Chat = require("../models/chats");
+const Message = require("../models/messages");
+
+exports.getAllMessages = async (req, res) => {
     try {
         const messages = await Message.find();
         console.log(messages)
@@ -10,7 +11,7 @@ export const getAllMessages = async (req, res) => {
     }
 }
 
-export const createMessages = async (req, res) => {
+exports.createMessages = async (req, res) => {
     const message = req.body
     const newMessage = new Message(message);
 
@@ -23,7 +24,7 @@ export const createMessages = async (req, res) => {
     res.send("messages")
 }
 
-export const getMessageByChat = async (req, res) =>{
+exports.getMessageByChat = async (req, res) =>{
     try{
         const  chats = Message.find(
             {
@@ -36,7 +37,7 @@ export const getMessageByChat = async (req, res) =>{
     }
 }
 
-export const deleteMessagesByChat = async (req, res) =>{
+exports.deleteMessagesByChat = async (req, res) =>{
     try{
         await Chat.deleteMany({chat:req.params.id})
     }catch (error) {

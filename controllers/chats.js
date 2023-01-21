@@ -1,7 +1,6 @@
-import {Chat} from "../models/chats";
-import {Message} from "../models/messages";
+const Chat = require("../models/chats");
 
-export const getAllChat = async (req, res) => {
+exports.getAllChat = async (req, res) => {
     try {
         const chats = await Chat.find();
         console.log(chats)
@@ -11,7 +10,7 @@ export const getAllChat = async (req, res) => {
     }
 }
 
-export const getChat = async (req,res) =>{
+exports.getChat = async (req,res) =>{
     try {
         const chat = Chat.findOne({
             participants: req.body.participants
@@ -22,7 +21,7 @@ export const getChat = async (req,res) =>{
     }
 }
 
-export const getChatByUser = async (req, res) =>{
+exports.getChatByUser = async (req, res) =>{
     try{
         const  chats = Chat.find(
             {
@@ -35,7 +34,7 @@ export const getChatByUser = async (req, res) =>{
     }
 }
 
-export const createChat = async (req, res) => {
+exports.createChat = async (req, res) => {
     const chat = req.body
     const newChat = new Chat(chat);
 
