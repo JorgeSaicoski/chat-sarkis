@@ -1,13 +1,14 @@
 const Chat = require("../models/chats");
+const {getItems} = require("../db/middleware/getItems");
+const {getOneItem} = require("../db/middleware/getOneItem");
+const {createItem} = require("../db/middleware/createItem");
+const {getChatsFull} = require("./helpers/getChatsFull");
 
 exports.getAllChat = async (req, res) => {
+    const chatsLog = await getChatsFull({},Chat)
+    console.log(chatsLog)
     try {
-        const chats = await Chat.find()
-            .exec()
-            .then((chats)=>{
-                res.status(200).json(chats)
-            })
-            .catch(res.status(404).json({message:error.message}));
+        res.status(200).json(await getChatsFull({}))
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -15,48 +16,43 @@ exports.getAllChat = async (req, res) => {
 
 exports.getChat = async (req,res) =>{
     try {
-        const chat = Chat.findOne({
-            participants: req.body.participants
-        })
-            .exec()
-            .then((chats)=>{
-                res.status(200).json(chats)
-            })
-            .catch(res.status(404).json({message:error.message}));
+        res.status(200).json(await getOneItem(req.params.id,Chat))
     } catch (error) {
         res.status(404).json({message:error.message})
     }
 }
 
 exports.getChatByUser = async (req, res) =>{
-    try{
-        const  chats = Chat.find(
-            {
-                participants: [req.params.id]
-            }
-        ).populate('participants')
-            .exec()
-            .then((chats)=>{
-                res.status(200).json(chats)
-            })
-            .catch(res.status(404).json({message:error.message}));
-        res.status(200).json(chats)
+    try {
+        res.status(200).json(await getChatsFull({
+            participants: req.participants
+        }))
     } catch (error) {
         res.status(404).json({message:error.message})
     }
 }
 
 exports.createChat = async (req, res) => {
-    const chat = req.body
+    console.log("__________________________________________________")
+    console.log(req.body)
+    const chat = await createItem(req.body, Chat).then(
+        (i)=>{
+          console.log(i)
+        }
+    ).catch(
+        (i)=>{
+            console.log(i)
+        }
+    )
+    console.log(chat)
+    res.status(200).json(chat)
+    /*
     try {
-        await Chat.create(chat)
-            .exec()
-            .then((chat)=>{
-                res.status(201).json(chat)
-            })
-            .catch(res.status(404).json({message:error.message}));
-
+        console.log("__________________________________________________2")
+        res.status(200).json(await createItem(req.body, Chat))
     } catch (error) {
-        res.status(404).json({message: error.message})
+        res.status(404).json({message:error.message})
     }
+
+     */
 }
