@@ -5,10 +5,11 @@ const {createItem} = require("../db/middleware/createItem");
 const {getChatsFull} = require("./helpers/getChatsFull");
 
 exports.getAllChat = async (req, res) => {
-    const chatsLog = await getChatsFull({},Chat)
+    console.log("chatsLog")
+    const chatsLog = await getChatsFull({})
     console.log(chatsLog)
     try {
-        res.status(200).json(await getChatsFull({}))
+        res.status(200).json( await getChatsFull({}))
     } catch (error) {
         res.status(404).json({message:error.message})
     }
